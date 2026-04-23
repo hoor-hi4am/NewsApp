@@ -17,4 +17,10 @@ interface WebServices {
     fun getArticles(@Query("apiKey")apiKey: String = ApiManager.API_KEY,
                     @Query("sources")source: String
     ): Call<ArticlesResponse>
+
+    @GET("https://newsapi.org/v2/everything")
+    fun searchArticles(@Query("apiKey")apiKey: String = ApiManager.API_KEY,
+                    @Query("sources")source: String,
+                    @Query("q")query: String
+    ): Call<ArticlesResponse>
 }

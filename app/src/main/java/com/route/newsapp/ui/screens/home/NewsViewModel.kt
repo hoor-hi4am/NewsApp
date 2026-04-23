@@ -80,4 +80,35 @@ class NewsViewModel : ViewModel() {//class to remove the logic from view
 
             })
     }
+
+    fun searchArticles(source: String, query: String) {
+        isLoading.value = true
+        errorMessage.value = null
+
+        ApiManager.getWebServices()
+            .searchArticles(source = source, query = query)
+            .enqueue(object : Callback<ArticlesResponse> {
+
+                override fun onResponse(
+                    call: Call<ArticlesResponse>,
+                    response: Response<ArticlesResponse>
+                ) {
+                    isLoading.value = false
+
+                    if (response.isSuccessful && response.body() != null) {
+                        articles.value = response.body()!!.articles
+                    } else {
+                        errorMessage.value = response.message()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<ArticlesResponse>,
+                    t: Throwable
+                ) {
+                    isLoading.value = false
+                    errorMessage.value = t.message ?: "Unknown error occurred"
+                }
+            })
+    }
 }

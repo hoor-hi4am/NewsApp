@@ -12,13 +12,18 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -53,31 +58,98 @@ fun ArticlesList(source: String) {
     val errorMessage = viewModel.errorMessage.observeAsState()
 
     var selectedArticle by remember { mutableStateOf<ArticleDM?>(null) }
+    var query by remember { mutableStateOf("") }
 
     DisposableEffect(source) {
         viewModel.getArticles(source)
         onDispose {}
     }
 
-    LazyColumn {
+    Column(){
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp)
+                .border(
+                    width = 1.dp,
+                    color = androidx.compose.ui.graphics.Color.White,
+                    shape = RoundedCornerShape(16.dp)
+                ),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .background(Black)
+                    .padding(horizontal = 12.dp, vertical = 8.dp),
+                verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = null,
+                    tint = androidx.compose.ui.graphics.Color.White
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                androidx.compose.material3.TextField(
+                    value = query,
+                    onValueChange = {
+                        query = it
+                        if (query.isBlank()) {
+                            viewModel.getArticles(source)
+                        } else {
+                            viewModel.searchArticles(source, query)
+                        }
+                    },
+                    modifier = Modifier.weight(1f),
+                    placeholder = {
+                        Text("Search", color = androidx.compose.ui.graphics.Color.Gray)
+                    },
+                    colors = androidx.compose.material3.TextFieldDefaults.colors(
+                        focusedContainerColor = Black,
+                        unfocusedContainerColor = Black,
+                        disabledContainerColor = Black,
+                        focusedTextColor = androidx.compose.ui.graphics.Color.White,
+                        unfocusedTextColor = androidx.compose.ui.graphics.Color.White,
+                        cursorColor = androidx.compose.ui.graphics.Color.White
+                    )
+                )
 
-        if (isLoading.value == true) {
-            item { DefaultLoadingView() }
-        }
-
-        if (errorMessage.value?.isNotEmpty() == true) {
-            item {
-                DefaultErrorMessage(message = errorMessage.value!!) {}
-            }
-        }
-
-        if (!articles.value.isNullOrEmpty()) {
-            items(articles.value!!) { article ->
-                ArticleItem(article = article) {
-                    selectedArticle = article
+                if (query.isNotEmpty()) {
+                    Icon(
+                        imageVector = Icons.Default.Clear,
+                        contentDescription = null,
+                        tint = androidx.compose.ui.graphics.Color.White,
+                        modifier = Modifier.clickable {
+                            query = ""
+                            viewModel.getArticles(source)
+                        }
+                    )
                 }
             }
         }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        LazyColumn {
+
+            if (isLoading.value == true) {
+                item { DefaultLoadingView() }
+            }
+
+            if (errorMessage.value?.isNotEmpty() == true) {
+                item {
+                    DefaultErrorMessage(message = errorMessage.value!!) {}
+                }
+            }
+
+            if (!articles.value.isNullOrEmpty()) {
+                items(articles.value!!) { article ->
+                    ArticleItem(article = article) {
+                        selectedArticle = article
+                    }
+                }
+            }
+        }
+
     }
 
     if (selectedArticle != null) {

@@ -1,4 +1,4 @@
-package com.route.newsapp.api
+package com.route.newsapp.data.api
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

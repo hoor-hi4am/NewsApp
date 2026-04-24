@@ -1,12 +1,17 @@
-package com.route.newsapp.api.model
+package com.route.newsapp.data.api.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity
 data class SourceDM(
 
 	@field:SerializedName("country")
 	val country: String? = null,
 
+    @ColumnInfo
 	@field:SerializedName("name")
 	val name: String? = null,
 
@@ -16,9 +21,11 @@ data class SourceDM(
 	@field:SerializedName("language")
 	val language: String? = null,
 
+    @PrimaryKey
 	@field:SerializedName("id")
-	val id: String? = null,
+	val id: String = "0",
 
+    @ColumnInfo
 	@field:SerializedName("category")
 	val category: String? = null,
 

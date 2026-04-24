@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.route.newsapp.api.model.ArticleDM
+import com.route.newsapp.data.api.model.ArticleDM
 import com.route.newsapp.ui.composables.DefaultErrorMessage
 import com.route.newsapp.ui.composables.DefaultLoadingView
 import com.route.newsapp.ui.screens.home.NewsViewModel

@@ -1,27 +1,19 @@
 package com.route.newsapp.ui.screens.home.composables.news
 
-import android.R.attr.category
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.route.newsapp.api.ApiManager
-import com.route.newsapp.api.model.SourceDM
-import com.route.newsapp.api.model.SourcesResponse
 import com.route.newsapp.ui.composables.DefaultErrorMessage
 import com.route.newsapp.ui.composables.DefaultLoadingView
 import com.route.newsapp.ui.model.Category
@@ -29,9 +21,6 @@ import com.route.newsapp.ui.screens.home.NewsViewModel
 import com.route.newsapp.ui.theme.Black
 import com.route.newsapp.ui.theme.NewsDarkTypography
 import com.route.newsapp.ui.theme.White
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 @Composable
 fun NewsTab(category: Category) {

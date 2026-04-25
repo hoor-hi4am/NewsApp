@@ -7,13 +7,7 @@ import com.route.newsapp.data.database.MyDatabase
 import java.util.Locale
 import java.util.Locale.getDefault
 
-class NewsLocalDataSource {
-    var dao = MyDatabase.getDatabase().getSourcesDao()
-    suspend fun getSources(category: String): List<SourceDM>{
-        return dao.getSources(category.lowercase(getDefault()))
-    }
-    suspend fun saveSources(category: String, sources: List<SourceDM>){
-        dao.saveSources(sources)
-
-    }
+interface NewsLocalDataSource {
+    suspend fun getSources(category: String): List<SourceDM>
+    suspend fun saveSources(category: String, sources: List<SourceDM>)
 }

@@ -13,6 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.route.newsapp.ui.composables.DefaultErrorMessage
 import com.route.newsapp.ui.composables.DefaultLoadingView
@@ -29,7 +30,7 @@ fun NewsTab(category: Category) {
 
 
     var selectedIndex by remember { mutableIntStateOf(0) }
-    val viewModel = viewModel<NewsViewModel>() //السهم الي خارج من الفيو و رايح للفيو موديل
+    val viewModel = hiltViewModel<NewsViewModel>() //السهم الي خارج من الفيو و رايح للفيو موديل
     val tabs = viewModel.tabs.observeAsState()
     val isLoading = viewModel.isLoading.observeAsState()
     val errorMessage = viewModel.errorMessage.observeAsState()

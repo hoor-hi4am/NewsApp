@@ -7,15 +7,13 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
 import androidx.annotation.RequiresPermission
+import dagger.hilt.android.qualifiers.ApplicationContext
+import jakarta.inject.Inject
 
-class Connectivity {
-    companion object{
-        @SuppressLint("StaticFieldLeak")
-        var context: Context? = null
-    }
+class ConnectivityImpl @Inject constructor(@ApplicationContext var context: Context?) : Connectivity {
     @RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
     @SuppressLint("ServiceCast")
-    fun isOnline(): Boolean {
+    override fun isOnline(): Boolean {
         val connectivityManager =
             context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val capabilities =

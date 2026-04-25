@@ -13,8 +13,9 @@ import com.route.newsapp.ui.screens.home.HomeScreen
 import com.route.newsapp.ui.screens.splash.SplashScreen
 import com.route.newsapp.ui.utils.HomeRoute
 import com.route.newsapp.ui.utils.SplashRoute
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
